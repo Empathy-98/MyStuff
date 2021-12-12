@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html><head>
+  <meta charset="UTF-8">
+  <style>
+      body {
+width: 100vw;
+height: 100vh;
+margin: 0;
+overflow: hidden;
+}
+  </style>
+</head>
+<body>
+  <script src = "DragControls.js"> </script>
+ <script src="https://threejs.org/build/three.min.js"></script>
+<script src="https://zpn.tuw.mybluehost.me/w3d/Miniproject/resources/OrbitControls.js"></script>
+<!-- GLTFLoader.js source -->
+<script src="https://cdn.rawgit.com/mrdoob/three.js/master/examples/js/loaders/GLTFLoader.js"></script>
+
+  <script>
+
+let scene, camera, renderer;
+      function init() 
+      {
+        //Creating the scene
+  scene = new THREE.Scene();
+  scene.background = new THREE.Color('lightgrey');
+        //Camera Setup
+  camera = new THREE.PerspectiveCamera(40,window.innerWidth/window.innerHeight,0.1,100);
+ // camera.rotation.y = 45/180*Math.PI;
+  camera.position.x = 0;
+  camera.position.y = 0.5;
+  camera.position.z = 2;
+
+        //Navigating with OrbitControls
+  controls = new THREE.OrbitControls(camera);
+  controls.addEventListener('change', renderer);
+
+        //Lights
+
+        const pointLight = new THREE.AmbientLight(0xffffff, 1)
+pointLight.position.x = 2
+pointLight.position.y = 3
+pointLight.position.z = 4
+scene.add(pointLight)
+
+        //Renderer
+        renderer = new THREE.WebGLRenderer({antialias:true});
+        renderer.setSize(window.innerWidth,window.innerHeight);
+     
+
+        document.body.appendChild(renderer.domElement);
+        let loader = new THREE.GLTFLoader();
+        loader.load('Chaise.gltf', function(gltf){
+          
+          car.scale.set(0.5,0.5,0.5);
+          scene.add(gltf.scene);
+          animate();
+        });
+        let loader2 = new THREE.GLTFLoader();
+        loader2.load('Labo.gltf', function(gltf){
+          gltf.scene.scale.set(0.3,0.3,0.3)
+          scene.add(gltf.scene);
+          animate();
+        });
+      }
+
+
+      function animate() {
+        renderer.render(scene,camera);
+        requestAnimationFrame(animate);
+      }
+
+
+      init();
+    
+  </script>
+  <canvas data-engine="three.js r135" width="872" height="937" style="display: block; width: 872px; height: 937px;"></canvas>
+
+</body></html>
